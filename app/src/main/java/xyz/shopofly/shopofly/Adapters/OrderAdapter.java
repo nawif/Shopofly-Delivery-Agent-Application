@@ -1,5 +1,6 @@
 package xyz.shopofly.shopofly.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +20,7 @@ public class OrderAdapter extends ArrayAdapter<Order> {
         super(context, 0, objects);
     }
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -31,9 +33,10 @@ public class OrderAdapter extends ArrayAdapter<Order> {
 
         Order order = getItem(position);
 
+        assert order != null;
         orderNumber.setText("#"+order.getCode());
         name.setText(order.getCustomer().getName());
-        orderAddress.setText(order.getAddress());
+        orderAddress.setText(order.getCustomer().getAddress());
 
         return convertView;
     }

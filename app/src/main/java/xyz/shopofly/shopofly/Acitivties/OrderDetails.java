@@ -20,8 +20,11 @@ public class OrderDetails extends AppCompatActivity {
     private String TAG = "OrderDetails";
     private Order order;
 
+    @BindView(R.id.customer_name)
     TextView customerName;
+    @BindView(R.id.customer_phone)
     TextView customerNumber;
+    @BindView(R.id.customer_location)
     TextView customerLocation;
     Button navigateToGoogleMaps;
 
@@ -51,6 +54,9 @@ public class OrderDetails extends AppCompatActivity {
     }
 
     private void fillCustomerDetails(Customer customer) {
+        customerName.setText(customer.getName());
+        customerNumber.setText(customer.getPhone());
+        customerLocation.setText(customer.getAddress());
 
     }
 }

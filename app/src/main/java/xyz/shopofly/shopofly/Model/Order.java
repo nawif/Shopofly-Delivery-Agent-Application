@@ -5,20 +5,18 @@ import java.util.ArrayList;
 
 public class Order implements Serializable {
     private String code;
-    private String address;
     private Customer customer;
     private ArrayList<Listing> listings;
 
 
-    public Order(String code, String address, Customer customer) {
+    public Order(String code, Customer customer) {
         this.code = code;
-        this.address = address;
         this.customer = customer;
         listings = new ArrayList<>();
     }
 
-    public Order(String code, String address, Customer customer, ArrayList<Listing> listings) {
-        this(code, address, customer);
+    public Order(String code, Customer customer, ArrayList<Listing> listings) {
+        this(code, customer);
         this.listings = listings;
     }
 
@@ -30,13 +28,7 @@ public class Order implements Serializable {
         this.code = code;
     }
 
-    public String getAddress() {
-        return address;
-    }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public Customer getCustomer() {
         return customer;
