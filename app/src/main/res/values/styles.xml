@@ -1,0 +1,26 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="subtitle" parent="@style/Base.TextAppearance.AppCompat.Medium">
+        <!--<item name="android:textSize">20sp</item>-->
+        <item name="android:textColor">@color/textColorPrimaryDark</item>
+        <item name="android:fontFamily">@font/cairo_regular</item>
+    </style>
+
+    <style name="title" parent="@style/Base.TextAppearance.AppCompat.Medium">
+        <!--<item name="android:textSize">20sp</item>-->
+        <item name="android:textColor">@color/textColorPrimaryDark</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24dp</item>
+        <item name="android:fontFamily">@font/cairo_bold</item>
+    </style>
+
+
+</resources>
