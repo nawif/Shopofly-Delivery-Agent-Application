@@ -11,6 +11,7 @@ import xyz.shopofly.shopofly.R;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,7 +27,15 @@ public class OrderDetails extends AppCompatActivity {
     TextView customerNumber;
     @BindView(R.id.customer_location)
     TextView customerLocation;
+    @BindView(R.id.total)
+    View vTotal;
+    @BindView(R.id.vat)
+    View vVat;
+    @BindView(R.id.subtotal)
+    View vSubtotal;
+
     Button navigateToGoogleMaps;
+
 
     @BindView(R.id.orders_list)
     ListView listingListview;
@@ -50,6 +59,18 @@ public class OrderDetails extends AppCompatActivity {
         }
         listingAdapter = new ListingAdapter(this, order.getListings());
         listingListview.setAdapter(listingAdapter);
+        fillTotal("Subtotal",order.getSubtotal(),vSubtotal);
+        fillTotal("VAT",order.getVat(),vVat);
+        fillTotal("Total",order.getTotal(),vTotal);
+
+    }
+
+    private void fillTotal(String type,double total, View vTotal) {
+        TextView paymentType = vTotal.findViewById(R.id.title);
+        TextView paymentPrice = vTotal.findViewById(R.id.subtitle);
+
+        paymentType.setText(type);
+        paymentPrice.setText(total+"");
 
     }
 
@@ -57,6 +78,6 @@ public class OrderDetails extends AppCompatActivity {
         customerName.setText(customer.getName());
         customerNumber.setText(customer.getPhone());
         customerLocation.setText(customer.getAddress());
-
     }
+
 }

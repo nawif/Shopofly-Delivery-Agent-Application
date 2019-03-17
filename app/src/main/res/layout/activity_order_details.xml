@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -57,6 +58,7 @@
                 app:cardElevation="6dp">
 
                 <LinearLayout
+                    android:padding="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -66,9 +68,25 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/total"/>
-                    <xyz.shopofly.shopofly.CustomViews.NonScrollListView
+                    <include
+                        android:id="@+id/subtotal"
+                        layout="@layout/element_text_far_apart"/>
+                    <include
+                        android:id="@+id/vat"
+                        layout="@layout/element_text_far_apart"/>
+                    <include
+                        android:id="@+id/total"
+                        layout="@layout/element_text_far_apart"/>
+                    <Button
+                        android:layout_margin="8dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/sign_in_button"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/round_button"
+                        android:text="Payment"
+                        android:textColor="#fff"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
 
@@ -80,16 +98,16 @@
     </ScrollView>
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_credit_cards_payment"
-        android:tint="#fff"
-        app:backgroundTint="#4CAF50" />
+    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginEnd="16dp"-->
+        <!--android:layout_marginBottom="16dp"-->
+        <!--android:src="@drawable/ic_credit_cards_payment"-->
+        <!--android:tint="#fff"-->
+        <!--app:backgroundTint="#4CAF50" />-->
 
 
 </RelativeLayout>

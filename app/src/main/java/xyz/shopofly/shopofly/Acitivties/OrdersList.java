@@ -51,7 +51,7 @@ public class OrdersList extends AppCompatActivity {
 
     private void fillArray(ArrayList<Order> orders) {
         for (int i = 0; i < 20; i++) {
-            orders.add(new Order((int)(Math.random()*1000000)+"", new Customer("Nawaf alquaid","0568484248", "Aqiq Zawr Harith 6262")));
+            orders.add(new Order((int)(Math.random()*1000000)+"", new Customer("Nawaf alquaid","0568484248", "Aqiq Zawr Harith 6262"), 120));
             orders.get(i).addListing(new Listing("Nylon Braided Lightning Cable",12.99,99,"http://shopofly.xyz/storage/listingsImages/MTQ1Mjc4ODY.jpg"));
             orders.get(i).addListing(new Listing("Nylon Braided Lightning Cable",12.99,99,"http://shopofly.xyz/storage/listingsImages/MTQ1Mjc4ODY.jpg"));
         }
