@@ -42,9 +42,36 @@
                     <xyz.shopofly.shopofly.CustomViews.NonScrollListView
                         android:id="@+id/orders_list"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp" />
 
                 </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/total"/>
+                    <xyz.shopofly.shopofly.CustomViews.NonScrollListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+
+
 
             </androidx.cardview.widget.CardView>
 
@@ -58,11 +85,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        app:backgroundTint="#4CAF50"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:src="@drawable/ic_credit_cards_payment"
         android:tint="#fff"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp" />
+        app:backgroundTint="#4CAF50" />
 
 
 </RelativeLayout>

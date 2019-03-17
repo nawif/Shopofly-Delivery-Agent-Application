@@ -3,4 +3,5 @@
     <string name="sign_in">Sign In</string>
     <string name="orders">Orders</string>
     <string name="customer_details">Customer Details</string>
+    <string name="total">Total</string>
 </resources>
