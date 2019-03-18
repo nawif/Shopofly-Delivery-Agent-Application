@@ -5,11 +5,15 @@ import xyz.shopofly.shopofly.R;
 
 import android.os.Bundle;
 
-public class PaymentActivity extends AppCompatActivity {
+public class PayActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
+    }
+
+    public void gotoPayofly(){
+
     }
 }

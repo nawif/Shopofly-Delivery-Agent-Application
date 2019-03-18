@@ -80,7 +80,7 @@
                     <Button
                         android:layout_margin="8dp"
                         android:layout_gravity="center"
-                        android:id="@+id/sign_in_button"
+                        android:id="@+id/pay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/round_button"

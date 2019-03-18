@@ -3,12 +3,14 @@ package xyz.shopofly.shopofly.Acitivties;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import xyz.shopofly.shopofly.Adapters.ListingAdapter;
 import xyz.shopofly.shopofly.Model.Customer;
 import xyz.shopofly.shopofly.Model.Listing;
 import xyz.shopofly.shopofly.Model.Order;
 import xyz.shopofly.shopofly.R;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,7 +37,9 @@ public class OrderDetails extends AppCompatActivity {
     View vSubtotal;
 
     Button navigateToGoogleMaps;
-    Button payBtn;
+
+//    @BindView(R.id.pay)
+//    Button payBtn;
 
 
     @BindView(R.id.orders_list)
@@ -54,7 +58,7 @@ public class OrderDetails extends AppCompatActivity {
         ButterKnife.bind(this);
         fillCustomerDetails(order.getCustomer());
         for (Listing listing: order.getListings()
-             ) {
+        ) {
             Log.d(TAG, "init: "+listing.getName());
             Log.d(TAG, "init: "+listing.getImageURL());
         }
@@ -81,4 +85,9 @@ public class OrderDetails extends AppCompatActivity {
         customerLocation.setText(customer.getAddress());
     }
 
+    @OnClick(R.id.pay)
+    public void toPayActivity(){
+        Intent i = new Intent(this, PayActivity.class);
+        startActivity(i);
+    }
 }
