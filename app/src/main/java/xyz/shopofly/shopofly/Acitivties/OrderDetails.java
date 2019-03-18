@@ -35,6 +35,7 @@ public class OrderDetails extends AppCompatActivity {
     View vSubtotal;
 
     Button navigateToGoogleMaps;
+    Button payBtn;
 
 
     @BindView(R.id.orders_list)

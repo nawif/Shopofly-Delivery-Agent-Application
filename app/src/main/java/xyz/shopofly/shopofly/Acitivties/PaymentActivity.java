@@ -1,6 +1,7 @@
 package xyz.shopofly.shopofly.Acitivties;
 
 import androidx.appcompat.app.AppCompatActivity;
+import xyz.shopofly.shopofly.R;
 
 import android.os.Bundle;
 
