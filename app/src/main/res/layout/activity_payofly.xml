@@ -7,14 +7,39 @@
     android:background="@drawable/background"
     android:focusableInTouchMode="true"
     android:gravity="center_horizontal"
-    android:paddingTop="32dp"
+    android:padding="64dp"
     android:orientation="vertical">
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation_view"
-        android:transitionName="@string/payofly"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_margin="8dp"
         android:layout_height="wrap_content"
-        app:lottie_fileName="nfc_scan.json"
-        app:lottie_loop="true"
-        app:lottie_autoPlay="true" />
+        android:id="@+id/payofly_container"
+        android:transitionName="@string/payofly"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="6dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subtitle"
+                android:transitionName="@string/payofly_title_transition"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="@string/payofly"/>
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animation_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:lottie_fileName="nfc_scan.json"
+                app:lottie_loop="true"
+                app:lottie_autoPlay="true" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </LinearLayout>

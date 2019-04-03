@@ -28,9 +28,14 @@ public class PayoflyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_payment);
-        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        setContentView(R.layout.activity_payofly);
+        initNFCReader();
 
+
+    }
+
+    private void initNFCReader() {
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {
             Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show();
             finish();
@@ -40,7 +45,6 @@ public class PayoflyActivity extends AppCompatActivity {
         pendingIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, this.getClass())
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-
     }
 
     @Override
