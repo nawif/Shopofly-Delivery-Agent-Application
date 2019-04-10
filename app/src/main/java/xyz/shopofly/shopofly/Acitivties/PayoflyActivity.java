@@ -33,7 +33,9 @@ import xyz.shopofly.shopofly.Services.NFC.NdefMessageParser;
 import xyz.shopofly.shopofly.Services.NFC.ParsedNdefRecord;
 import xyz.shopofly.shopofly.Services.NFC.Utilities;
 import xyz.shopofly.shopofly.Utils.Constants;
+import xyz.shopofly.shopofly.Utils.Helpers;
 import xyz.shopofly.shopofly.Utils.Injector;
+import xyz.shopofly.shopofly.Utils.TokenNotFoundException;
 
 public class PayoflyActivity extends AppCompatActivity {
 
@@ -149,26 +151,31 @@ public class PayoflyActivity extends AppCompatActivity {
 
     private void fetch(Payment payment){
         paymentProgress.setVisibility(View.VISIBLE);
-        Injector.provideOrderService().processPayment(Constants.TOKEN,payment).enqueue(new Callback<Payment>() {
-            @Override
-            public void onResponse(Call<Payment> call, Response<Payment> response) {
-                if( response.code() == 200){
-                    Toast.makeText(PayoflyActivity.this, "Payment accepted, thank you for using Payofly", Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(PayoflyActivity.this, "Order has been already payed for!", Toast.LENGTH_LONG).show();
+        try {
+            Injector.provideOrderService().processPayment(Helpers.getToken(this),payment).enqueue(new Callback<Payment>() {
+                @Override
+                public void onResponse(Call<Payment> call, Response<Payment> response) {
+                    if( response.code() == 200){
+                        Toast.makeText(PayoflyActivity.this, "Payment accepted, thank you for using Payofly", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(PayoflyActivity.this, "Order has been already payed for!", Toast.LENGTH_LONG).show();
+                    }
+                    paymentProgress.setVisibility(View.GONE);
+
                 }
-                paymentProgress.setVisibility(View.GONE);
 
-            }
-
-            @Override
-            public void onFailure(Call<Payment> call, Throwable t) {
-                Toast.makeText(PayoflyActivity.this, "Payment failed, please try again later", Toast.LENGTH_LONG).show();
-                paymentProgress.setVisibility(View.GONE);
+                @Override
+                public void onFailure(Call<Payment> call, Throwable t) {
+                    Toast.makeText(PayoflyActivity.this, "Payment failed, please try again later", Toast.LENGTH_LONG).show();
+                    paymentProgress.setVisibility(View.GONE);
 
 
-            }
-        });
+                }
+            });
+        } catch (TokenNotFoundException e) {
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+        }
 
     }
 

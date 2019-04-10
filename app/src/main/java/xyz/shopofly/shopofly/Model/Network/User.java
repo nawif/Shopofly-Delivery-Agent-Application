@@ -14,15 +14,18 @@ public class User {
     private String tokenType;
 
     public String getToken() {
-        return token;
+        return getTokenType()+" "+token;
     }
 
     public void setToken(String token) {
         this.token = token;
     }
 
-    public String getTokenType() {
-        return tokenType;
+    private String getTokenType() {
+        if (tokenType == null || tokenType.length() == 0) {
+            return tokenType;
+        }
+        return tokenType.substring(0, 1).toUpperCase() + tokenType.substring(1);
     }
 
     public void setTokenType(String tokenType) {

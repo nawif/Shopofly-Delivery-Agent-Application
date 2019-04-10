@@ -11,10 +11,12 @@ import xyz.shopofly.shopofly.Model.Network.User;
 import xyz.shopofly.shopofly.R;
 import xyz.shopofly.shopofly.Utils.Helpers;
 import xyz.shopofly.shopofly.Utils.Injector;
+import xyz.shopofly.shopofly.Utils.TokenNotFoundException;
 
 import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +25,7 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoginContract {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final boolean DEBUG_MOOD = false;
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void attemptLogin() {
+    public void attemptLogin() {
         if(DEBUG_MOOD)
             startActivity(new Intent(MainActivity.this, OrdersList.class));
         String phone = phoneInput.getText().toString();
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 switch (response.code()){
                     case 200:
+                        Helpers.storeToken(response.body().getToken(),MainActivity.this);
                         startActivity(new Intent(MainActivity.this, OrdersList.class));
                         break;
                     case 401:
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void showNetworkError() {
+    public void showNetworkError() {
         Helpers.showLoadingProgress(false, loginProgress);
         loginBtn.setVisibility(View.VISIBLE);
         networkErrorAnim.setVisibility(View.VISIBLE);
@@ -121,5 +124,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void checkIfAlreadyLoggedIn(){
+        try {
+            Helpers.getToken(this);
+            Log.d(TAG, "checkIfAlreadyLoggedIn: user already logged in");
+            Intent intent = new Intent(this, OrdersList.class);
+            startActivity(intent);
+        } catch (TokenNotFoundException e) {
+            Log.d(TAG, "checkIfAlreadyLoggedIn: user not logged in");
+        }
+    }
 
 }

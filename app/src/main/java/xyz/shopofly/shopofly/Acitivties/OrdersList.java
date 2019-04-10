@@ -14,6 +14,7 @@ import xyz.shopofly.shopofly.R;
 import xyz.shopofly.shopofly.Utils.Constants;
 import xyz.shopofly.shopofly.Utils.Helpers;
 import xyz.shopofly.shopofly.Utils.Injector;
+import xyz.shopofly.shopofly.Utils.TokenNotFoundException;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -70,7 +71,13 @@ public class OrdersList extends AppCompatActivity {
     private void fetchData() {
         Helpers.showLoadingProgress(true, loadingAnimation);
         OrderService orderService = Injector.provideOrderService();
-        Call<List<Order>> ordersCall = orderService.getOrderList(Constants.TOKEN);
+        Call<List<Order>> ordersCall = null;
+        try {
+            ordersCall = orderService.getOrderList(Helpers.getToken(this));
+        } catch (TokenNotFoundException e) {
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+        }
 
         ordersCall.enqueue(new Callback<List<xyz.shopofly.shopofly.Model.Network.Order>>() {
             @Override
@@ -111,5 +118,9 @@ public class OrdersList extends AppCompatActivity {
         return sortedOrders;
     }
 
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+    }
 
 }
