@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.password)
     EditText passwordInput;
     @BindView(R.id.login_progress)
-    ProgressBar loginProgress;
+    LottieAnimationView loginProgress;
 
     @BindView(R.id.animation_view)
     LottieAnimationView networkErrorAnim;
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         }
         loginBtn.setVisibility(View.GONE);
         Call<User> userAttempt = Injector.provideUserService().login(new Login(phone, password));
-        loginProgress.setVisibility(View.VISIBLE);
+        Helpers.showLoadingProgress(true, loginProgress);
         userAttempt.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Wrong Phone number or Password", Toast.LENGTH_SHORT).show();
                         break;
                 }
-                loginProgress.setVisibility(View.INVISIBLE);
+                Helpers.showLoadingProgress(false, loginProgress);
                 loginBtn.setVisibility(View.VISIBLE);
 
             }
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showNetworkError() {
-        loginProgress.setVisibility(View.INVISIBLE);
+        Helpers.showLoadingProgress(false, loginProgress);
         loginBtn.setVisibility(View.VISIBLE);
         networkErrorAnim.setVisibility(View.VISIBLE);
         networkErrorAnim.playAnimation();

@@ -12,6 +12,7 @@ import xyz.shopofly.shopofly.Adapters.OrderAdapter;
 import xyz.shopofly.shopofly.Model.Network.Order;
 import xyz.shopofly.shopofly.R;
 import xyz.shopofly.shopofly.Utils.Constants;
+import xyz.shopofly.shopofly.Utils.Helpers;
 import xyz.shopofly.shopofly.Utils.Injector;
 
 import android.content.Intent;
@@ -22,7 +23,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class OrdersList extends AppCompatActivity {
@@ -33,6 +37,9 @@ public class OrdersList extends AppCompatActivity {
 
     @BindView(R.id.swipe)
     SwipeRefreshLayout pullToRefresh;
+
+    @BindView(R.id.loading_progress)
+    LottieAnimationView loadingAnimation;
 
 
     List<Order> orders = new ArrayList<>();
@@ -48,8 +55,8 @@ public class OrdersList extends AppCompatActivity {
     }
 
     private void init() {
-        fetchData();
         ButterKnife.bind(this);
+        fetchData();
         orderAdapter = new OrderAdapter(this, orders);
         ordersList.setAdapter(orderAdapter);
         ordersList.setOnItemClickListener((adapterView, view, i, l) -> {
@@ -61,6 +68,7 @@ public class OrdersList extends AppCompatActivity {
     }
 
     private void fetchData() {
+        Helpers.showLoadingProgress(true, loadingAnimation);
         OrderService orderService = Injector.provideOrderService();
         Call<List<Order>> ordersCall = orderService.getOrderList(Constants.TOKEN);
 
@@ -68,20 +76,40 @@ public class OrdersList extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<xyz.shopofly.shopofly.Model.Network.Order>> call, Response<List<xyz.shopofly.shopofly.Model.Network.Order>> response) {
                 Log.d(TAG, "onResponse: "+response.message());
-                orders=response.body();
+                orders=sortedOrders(response.body());
                 if (orders != null) {
                     orderAdapter.clear();
                     orderAdapter.addAll(orders);
                 }
                 pullToRefresh.setRefreshing(false);
+                Helpers.showLoadingProgress(false, loadingAnimation);
+
             }
 
             @Override
             public void onFailure(Call<List<xyz.shopofly.shopofly.Model.Network.Order>> call, Throwable t) {
                 Log.e(TAG, "onFailure: "+t.getMessage(),t );
                 Toast.makeText(OrdersList.this, "Error, check your network access", Toast.LENGTH_SHORT).show();
+                Helpers.showLoadingProgress(false, loadingAnimation);
+                pullToRefresh.setRefreshing(false);
             }
         });
     }
+
+    private List<Order> sortedOrders(List<Order> body) {
+        List<Order> payedDeliveries = new ArrayList<>();
+        List<Order> unPaidDeliveries = new ArrayList<>();
+        for (Order order:body) {
+            if(order.getTransaction().getStatus().equalsIgnoreCase("pending")){
+                unPaidDeliveries.add(order);
+            }else
+                payedDeliveries.add(order);
+        }
+        List<Order> sortedOrders = new LinkedList<>();
+        sortedOrders.addAll(unPaidDeliveries);
+        sortedOrders.addAll(payedDeliveries);
+        return sortedOrders;
+    }
+
 
 }

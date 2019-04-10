@@ -12,6 +12,7 @@ import xyz.shopofly.shopofly.Model.Network.Order;
 import xyz.shopofly.shopofly.R;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,12 +37,8 @@ public class OrderDetails extends AppCompatActivity {
     View vVat;
     @BindView(R.id.subtotal)
     View vSubtotal;
-
-    Button navigateToGoogleMaps;
-
-//    @BindView(R.id.pay)
-//    Button payBtn;
-
+    @BindView(R.id.call_button)
+    Button callCustomerBtn;
 
     @BindView(R.id.orders_list)
     ListView listingListview;
@@ -63,7 +60,7 @@ public class OrderDetails extends AppCompatActivity {
         fillTotal("Subtotal",order.getTotal().getTotal(),vSubtotal);
         fillTotal("VAT",order.getTotal().getVat(),vVat);
         fillTotal("Total",order.getTotal().getTotalWithVat(),vTotal);
-
+        callCustomerBtn.setOnClickListener(view -> callCustomer(order.getCustomer()));
     }
 
     private void fillTotal(String type,double total, View vTotal) {
@@ -79,6 +76,12 @@ public class OrderDetails extends AppCompatActivity {
         customerName.setText(customer.getFullName());
         customerNumber.setText(customer.getMobileNumber());
         customerLocation.setText(address.toString());
+    }
+
+    private void callCustomer(Customer customer) {
+        Uri customerPhone = Uri.parse("tel:+966"+customer.getMobileNumber().substring(1));
+        Intent callIntent = new Intent(Intent.ACTION_DIAL, customerPhone);
+        startActivity(callIntent);
     }
 
     @OnClick(R.id.pay)

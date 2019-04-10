@@ -7,14 +7,17 @@ import androidx.core.util.Pair;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import xyz.shopofly.shopofly.Model.Network.Customer;
 import xyz.shopofly.shopofly.Model.Network.Order;
 import xyz.shopofly.shopofly.R;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -40,12 +43,14 @@ public class PayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
-        ButterKnife.bind(this);
         init();
     }
 
     private void init() {
+        ButterKnife.bind(this);
         order = (Order) getIntent().getSerializableExtra("order");
+        if(order == null)
+            finish();
         fillTotal("Subtotal",order.getTotal().getTotal(),vSubtotal);
         fillTotal("VAT",order.getTotal().getVat(),vVat);
         fillTotal("Total",order.getTotal().getTotalWithVat(),vTotal);
