@@ -17,10 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Acitivties.PayActivity" android:parentActivityName=".Acitivties.OrderDetails"></activity>
-        <activity android:name=".Acitivties.PayoflyActivity" android:parentActivityName=".Acitivties.PayActivity">
-
-        </activity>
         <activity android:name=".Acitivties.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,8 +24,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".Acitivties.PayActivity" android:parentActivityName=".Acitivties.OrderDetails"/>
+        <activity android:name=".Acitivties.PayoflyActivity" android:parentActivityName=".Acitivties.PayActivity"/>
         <activity android:name=".Acitivties.OrdersList" />
-        <activity android:name=".Acitivties.OrderDetails" />
+        <activity android:name=".Acitivties.OrderDetails" android:parentActivityName=".Acitivties.OrdersList" />
     </application>
 
 </manifest>
