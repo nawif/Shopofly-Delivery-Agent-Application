@@ -1,10 +1,19 @@
 package xyz.shopofly.shopofly.Acitivties;
 
 import androidx.appcompat.app.AppCompatActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import xyz.shopofly.shopofly.Model.Network.Order;
+import xyz.shopofly.shopofly.Model.Network.Payment;
 import xyz.shopofly.shopofly.R;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.nfc.FormatException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -12,24 +21,42 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.Settings;
+import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.List;
 
 import xyz.shopofly.shopofly.Services.NFC.NdefMessageParser;
 import xyz.shopofly.shopofly.Services.NFC.ParsedNdefRecord;
 import xyz.shopofly.shopofly.Services.NFC.Utilities;
+import xyz.shopofly.shopofly.Utils.Constants;
+import xyz.shopofly.shopofly.Utils.Injector;
 
 public class PayoflyActivity extends AppCompatActivity {
 
+    private static final String TAG = PayoflyActivity.class.getSimpleName();
     NfcAdapter nfcAdapter;
     PendingIntent pendingIntent;
+    Order order;
+
+    @BindView(R.id.payofly_layout)
+    View layoutContainer;
+
+    @BindView(R.id.payment_progress)
+    ProgressBar paymentProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payofly);
+        ButterKnife.bind(this);
+        order= (Order) getIntent().getSerializableExtra("order");
         initNFCReader();
+
+        layoutContainer.setOnClickListener(view -> handelClick());
 
 
     }
@@ -69,6 +96,7 @@ public class PayoflyActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         setIntent(intent);
         resolveIntent(intent);
+        super.onNewIntent(intent);
     }
 
     private void resolveIntent(Intent intent) {
@@ -114,8 +142,42 @@ public class PayoflyActivity extends AppCompatActivity {
             String str = record.str();
             builder.append(str).append("\n");
         }
-
-        Toast.makeText(this, (builder.toString()), Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "displayMsgs: "+builder.toString());
+        Payment payment = new Payment(builder.toString(),order.getOrderId());
+        fetch(payment);
     }
 
+    private void fetch(Payment payment){
+        paymentProgress.setVisibility(View.VISIBLE);
+        Injector.provideOrderService().processPayment(Constants.TOKEN,payment).enqueue(new Callback<Payment>() {
+            @Override
+            public void onResponse(Call<Payment> call, Response<Payment> response) {
+                if( response.code() == 200){
+                    Toast.makeText(PayoflyActivity.this, "Payment accepted, thank you for using Payofly", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(PayoflyActivity.this, "Order has been already payed for!", Toast.LENGTH_LONG).show();
+                }
+                paymentProgress.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onFailure(Call<Payment> call, Throwable t) {
+                Toast.makeText(PayoflyActivity.this, "Payment failed, please try again later", Toast.LENGTH_LONG).show();
+                paymentProgress.setVisibility(View.GONE);
+
+
+            }
+        });
+
+    }
+
+    public void handelClick() {
+        Payment payment = new Payment("kkkkkkkkkk",order.getOrderId());
+        fetch(payment);
+
+
+    }
 }
+
+

@@ -14,7 +14,7 @@ public class Customer implements Serializable
     @SerializedName("mobile_number")
     @Expose
     private String mobileNumber;
-    private final static long serialVersionUID = -1365297989513738900L;
+    private final static long serialVersionUID = -6925636695353743849L;
 
     /**
      * No args constructor for use in serialization

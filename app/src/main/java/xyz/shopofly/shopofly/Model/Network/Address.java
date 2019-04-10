@@ -5,6 +5,8 @@ import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import androidx.annotation.NonNull;
+
 public class Address implements Serializable
 {
 
@@ -26,7 +28,7 @@ public class Address implements Serializable
     @SerializedName("house_number")
     @Expose
     private String houseNumber;
-    private final static long serialVersionUID = 4335510054735241285L;
+    private final static long serialVersionUID = -1816263561576280999L;
 
     /**
      * No args constructor for use in serialization
@@ -52,6 +54,12 @@ public class Address implements Serializable
         this.district = district;
         this.street = street;
         this.houseNumber = houseNumber;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return district+" "+street+" "+houseNumber;
     }
 
     public String getStatus() {

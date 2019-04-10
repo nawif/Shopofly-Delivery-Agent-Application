@@ -36,7 +36,7 @@ public class Item implements Serializable
     @SerializedName("image_url")
     @Expose
     private List<String> imageUrl = null;
-    private final static long serialVersionUID = -7909060707508031374L;
+    private final static long serialVersionUID = -8210212266340875694L;
 
     /**
      * No args constructor for use in serialization

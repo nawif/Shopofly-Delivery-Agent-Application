@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/payofly_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,37 +10,49 @@
     android:gravity="center_horizontal"
     android:padding="64dp"
     android:orientation="vertical">
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_margin="8dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/payofly_container"
-        android:transitionName="@string/payofly"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="6dp">
-        <LinearLayout
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
+            android:layout_margin="8dp"
             android:layout_height="wrap_content"
-            android:background="#fff"
-            android:orientation="vertical"
-            android:padding="@dimen/activity_vertical_margin">
-            <TextView
+            android:id="@+id/payofly_container"
+            android:transitionName="@string/payofly"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/subtitle"
-                android:transitionName="@string/payofly_title_transition"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:text="@string/payofly"/>
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/animation_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:lottie_fileName="nfc_scan.json"
-                app:lottie_loop="true"
-                app:lottie_autoPlay="true" />
+                android:background="#fff"
+                android:orientation="vertical"
+                android:padding="@dimen/activity_vertical_margin">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/subtitle"
+                    android:transitionName="@string/payofly_title_transition"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="@string/payofly"/>
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animation_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:lottie_fileName="nfc_scan.json"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true" />
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-</LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+    <ProgressBar
+        android:layout_gravity="center"
+        android:id="@+id/payment_progress"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+</FrameLayout>

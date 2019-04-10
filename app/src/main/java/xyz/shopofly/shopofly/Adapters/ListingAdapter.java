@@ -13,12 +13,12 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import xyz.shopofly.shopofly.Model.Listing;
+import xyz.shopofly.shopofly.Model.Network.Item;
 import xyz.shopofly.shopofly.R;
 
-public class ListingAdapter extends ArrayAdapter<Listing> {
+public class ListingAdapter extends ArrayAdapter<Item> {
 
-    public ListingAdapter(Context context, List<Listing> objects) {
+    public ListingAdapter(Context context, List<Item> objects) {
         super(context, 0, objects);
     }
 
@@ -31,13 +31,15 @@ public class ListingAdapter extends ArrayAdapter<Listing> {
         TextView name = convertView.findViewById(R.id.listingName);
         TextView quantity = convertView.findViewById(R.id.listingQuantity);
 
-        Listing listing = getItem(position);
+        Item listing = getItem(position);
 
-        Glide.
-                with(getContext()).
-                load(listing.getImageURL()).
-                into(image); // Parsing url into image
-        name.setText(listing.getName());
+        if (listing != null) {
+            Glide.
+                    with(getContext()).
+                    load(listing.getImageUrl().get(0)).
+                    into(image); // Parsing url into image
+        }
+        name.setText(listing.getItemName());
         quantity.setText("Quantity: "+listing.getQuantity());
 
         return convertView;

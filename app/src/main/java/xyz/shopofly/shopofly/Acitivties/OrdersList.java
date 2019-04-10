@@ -1,28 +1,41 @@
 package xyz.shopofly.shopofly.Acitivties;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import xyz.shopofly.shopofly.API.OrderService;
 import xyz.shopofly.shopofly.Adapters.OrderAdapter;
-import xyz.shopofly.shopofly.Model.Customer;
-import xyz.shopofly.shopofly.Model.Listing;
-import xyz.shopofly.shopofly.Model.Order;
+import xyz.shopofly.shopofly.Model.Network.Order;
 import xyz.shopofly.shopofly.R;
+import xyz.shopofly.shopofly.Utils.Constants;
+import xyz.shopofly.shopofly.Utils.Injector;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrdersList extends AppCompatActivity {
 
+    private static final String TAG = OrdersList.class.getSimpleName();
     @BindView(R.id.orders_list)
     ListView ordersList;
 
-    ArrayList<Order> orders = new ArrayList<>();
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout pullToRefresh;
+
+
+    List<Order> orders = new ArrayList<>();
 
     OrderAdapter orderAdapter;
 
@@ -35,25 +48,40 @@ public class OrdersList extends AppCompatActivity {
     }
 
     private void init() {
-        fillArray(orders);
+        fetchData();
         ButterKnife.bind(this);
         orderAdapter = new OrderAdapter(this, orders);
         ordersList.setAdapter(orderAdapter);
-        ordersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ordersList.setOnItemClickListener((adapterView, view, i, l) -> {
+            Intent intent = new Intent(OrdersList.this, OrderDetails.class);
+            intent.putExtra("order",orders.get(i));
+            startActivity(intent);
+        });
+        pullToRefresh.setOnRefreshListener(this::fetchData);
+    }
+
+    private void fetchData() {
+        OrderService orderService = Injector.provideOrderService();
+        Call<List<Order>> ordersCall = orderService.getOrderList(Constants.TOKEN);
+
+        ordersCall.enqueue(new Callback<List<xyz.shopofly.shopofly.Model.Network.Order>>() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(OrdersList.this, OrderDetails.class);
-                intent.putExtra("order",orders.get(i));
-                startActivity(intent);
+            public void onResponse(Call<List<xyz.shopofly.shopofly.Model.Network.Order>> call, Response<List<xyz.shopofly.shopofly.Model.Network.Order>> response) {
+                Log.d(TAG, "onResponse: "+response.message());
+                orders=response.body();
+                if (orders != null) {
+                    orderAdapter.clear();
+                    orderAdapter.addAll(orders);
+                }
+                pullToRefresh.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(Call<List<xyz.shopofly.shopofly.Model.Network.Order>> call, Throwable t) {
+                Log.e(TAG, "onFailure: "+t.getMessage(),t );
+                Toast.makeText(OrdersList.this, "Error, check your network access", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void fillArray(ArrayList<Order> orders) {
-        for (int i = 0; i < 20; i++) {
-            orders.add(new Order((int)(Math.random()*1000000)+"", new Customer("Nawaf alquaid","0568484248", "Aqiq Zawr Harith 6262"), 120));
-            orders.get(i).addListing(new Listing("Nylon Braided Lightning Cable",12.99,99,"http://shopofly.xyz/storage/listingsImages/MTQ1Mjc4ODY.jpg"));
-            orders.get(i).addListing(new Listing("Nylon Braided Lightning Cable",12.99,99,"http://shopofly.xyz/storage/listingsImages/MTQ1Mjc4ODY.jpg"));
-        }
-    }
 }

@@ -5,9 +5,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import xyz.shopofly.shopofly.Adapters.ListingAdapter;
-import xyz.shopofly.shopofly.Model.Customer;
-import xyz.shopofly.shopofly.Model.Listing;
-import xyz.shopofly.shopofly.Model.Order;
+import xyz.shopofly.shopofly.Model.Network.Address;
+import xyz.shopofly.shopofly.Model.Network.Customer;
+import xyz.shopofly.shopofly.Model.Network.Item;
+import xyz.shopofly.shopofly.Model.Network.Order;
 import xyz.shopofly.shopofly.R;
 
 import android.content.Intent;
@@ -56,17 +57,12 @@ public class OrderDetails extends AppCompatActivity {
     private void init() {
         order = (Order) getIntent().getSerializableExtra("order");
         ButterKnife.bind(this);
-        fillCustomerDetails(order.getCustomer());
-        for (Listing listing: order.getListings()
-        ) {
-            Log.d(TAG, "init: "+listing.getName());
-            Log.d(TAG, "init: "+listing.getImageURL());
-        }
-        listingAdapter = new ListingAdapter(this, order.getListings());
+        fillCustomerDetails(order.getCustomer(), order.getAddress());
+        listingAdapter = new ListingAdapter(this, order.getItems());
         listingListview.setAdapter(listingAdapter);
-        fillTotal("Subtotal",order.getSubtotal(),vSubtotal);
-        fillTotal("VAT",order.getVat(),vVat);
-        fillTotal("Total",order.getTotal(),vTotal);
+        fillTotal("Subtotal",order.getTotal().getTotal(),vSubtotal);
+        fillTotal("VAT",order.getTotal().getVat(),vVat);
+        fillTotal("Total",order.getTotal().getTotalWithVat(),vTotal);
 
     }
 
@@ -75,19 +71,20 @@ public class OrderDetails extends AppCompatActivity {
         TextView paymentPrice = vTotal.findViewById(R.id.subtitle);
 
         paymentType.setText(type);
-        paymentPrice.setText(total+"");
+        paymentPrice.setText(String.format("%s", total));
 
     }
 
-    private void fillCustomerDetails(Customer customer) {
-        customerName.setText(customer.getName());
-        customerNumber.setText(customer.getPhone());
-        customerLocation.setText(customer.getAddress());
+    private void fillCustomerDetails(Customer customer, Address address) {
+        customerName.setText(customer.getFullName());
+        customerNumber.setText(customer.getMobileNumber());
+        customerLocation.setText(address.toString());
     }
 
     @OnClick(R.id.pay)
     public void toPayActivity(){
         Intent i = new Intent(this, PayActivity.class);
+        i.putExtra("order",order);
         startActivity(i);
     }
 }

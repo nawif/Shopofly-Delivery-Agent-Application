@@ -20,7 +20,7 @@ public class Supplier implements Serializable
     @SerializedName("created_at")
     @Expose
     private String createdAt;
-    private final static long serialVersionUID = -7055990929304825009L;
+    private final static long serialVersionUID = -8093873427214733688L;
 
     /**
      * No args constructor for use in serialization

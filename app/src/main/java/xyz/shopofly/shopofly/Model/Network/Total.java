@@ -17,7 +17,7 @@ public class Total implements Serializable
     @SerializedName("total_with_vat")
     @Expose
     private Double totalWithVat;
-    private final static long serialVersionUID = 6949631045724061955L;
+    private final static long serialVersionUID = 6799210841844243908L;
 
     /**
      * No args constructor for use in serialization
