@@ -81,4 +81,9 @@ public class PayActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+    @OnClick(R.id.backImage)
+    public void back(){
+        finish();
+    }
 }

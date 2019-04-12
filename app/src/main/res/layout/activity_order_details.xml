@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +7,8 @@
     android:background="@drawable/background"
     android:orientation="vertical"
     >
-
+    <include
+        layout="@layout/element_back_bar"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -96,18 +97,4 @@
         </LinearLayout>
 
     </ScrollView>
-
-
-    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_marginEnd="16dp"-->
-        <!--android:layout_marginBottom="16dp"-->
-        <!--android:src="@drawable/ic_credit_cards_payment"-->
-        <!--android:tint="#fff"-->
-        <!--app:backgroundTint="#4CAF50" />-->
-
-
-</RelativeLayout>
+</LinearLayout>

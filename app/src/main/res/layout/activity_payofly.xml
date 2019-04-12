@@ -8,9 +8,11 @@
     android:background="@drawable/background"
     android:focusableInTouchMode="true"
     android:gravity="center_horizontal"
-    android:padding="64dp"
     android:orientation="vertical">
+    <include
+        layout="@layout/element_back_bar"/>
     <LinearLayout
+        android:padding="64dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

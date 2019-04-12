@@ -58,7 +58,7 @@ public class PayoflyActivity extends AppCompatActivity {
         order= (Order) getIntent().getSerializableExtra("order");
         initNFCReader();
 
-        layoutContainer.setOnClickListener(view -> handelClick());
+//        layoutContainer.setOnClickListener(view -> handelClick());
 
 
     }
@@ -182,8 +182,11 @@ public class PayoflyActivity extends AppCompatActivity {
     public void handelClick() {
         Payment payment = new Payment("kkkkkkkkkk",order.getOrderId());
         fetch(payment);
+    }
 
-
+    @OnClick(R.id.backImage)
+    public void back(){
+        finish();
     }
 }
 
