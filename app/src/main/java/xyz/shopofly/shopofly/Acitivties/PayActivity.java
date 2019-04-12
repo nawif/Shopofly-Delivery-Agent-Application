@@ -81,6 +81,22 @@ public class PayActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+    @OnClick(R.id.halalah_container)
+    public void gotoHalalah(){
+        Log.d(TAG, "gotoHalalah: ");
+        Intent intent = new Intent(this, HalalahActivity.class);
+        intent.putExtra("order", order);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && false ) { //TODO:
+            Pair logo = Pair.create(payoflyAnimation, getString(R.string.payofly));
+            Pair title = Pair.create(payoflyTitle, getString(R.string.payofly_title_transition));
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(this,logo,title);
+            startActivity(intent, options.toBundle());
+        }
+        else {
+            startActivity(intent);
+        }
+    }
 
     @OnClick(R.id.backImage)
     public void back(){

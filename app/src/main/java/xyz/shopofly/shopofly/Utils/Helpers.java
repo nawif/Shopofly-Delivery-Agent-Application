@@ -2,13 +2,18 @@ package xyz.shopofly.shopofly.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.view.View;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 
 import java.io.IOException;
-
-import static android.content.Context.MODE_PRIVATE;
+import java.util.Hashtable;
 
 public class Helpers {
 
@@ -52,6 +57,38 @@ public class Helpers {
         SharedPreferences.Editor editor = getPrefs(context).edit();
         editor.putString(Constants.PREFS_TOKEN_NAME, token);
         editor.apply();
+    }
+
+    public static Bitmap generateQRCode(String text, int width, int height) throws WriterException, NullPointerException {
+        BitMatrix bitMatrix;
+        try {
+            Hashtable<EncodeHintType, String> hints = new Hashtable<>();
+            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+            bitMatrix = new MultiFormatWriter().encode(text, BarcodeFormat.QR_CODE,
+                    width, height, hints);
+        } catch (IllegalArgumentException Illegalargumentexception) {
+            return null;
+        }
+
+        int bitMatrixWidth = bitMatrix.getWidth();
+        int bitMatrixHeight = bitMatrix.getHeight();
+        int[] pixels = new int[bitMatrixWidth * bitMatrixHeight];
+
+        int colorWhite = 0xFFFFFFFF;
+        int colorBlack = 0xFF000000;
+
+        for (int y = 0; y < bitMatrixHeight; y++) {
+            int offset = y * bitMatrixWidth;
+            for (int x = 0; x < bitMatrixWidth; x++) {
+                pixels[offset + x] = bitMatrix.get(x, y) ? colorBlack : colorWhite;
+            }
+        }
+        Bitmap bitmap = Bitmap.createBitmap(bitMatrixWidth, bitMatrixHeight, Bitmap.Config.ARGB_4444);
+
+        bitmap.setPixels(pixels, 0, width, 0, 0, bitMatrixWidth, bitMatrixHeight);
+
+
+        return bitmap;
     }
 
 }

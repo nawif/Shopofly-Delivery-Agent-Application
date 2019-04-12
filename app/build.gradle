@@ -55,8 +55,7 @@ dependencies {
     //Toasty
 //    implementation 'com.github.GrenderG:Toasty:1.4.2'
     //QR Code Generation
-    implementation 'com.google.zxing:zxing-parent:3.3.3'
-
+    implementation 'com.google.zxing:core:3.3.0'
 
 
 }
