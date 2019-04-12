@@ -13,12 +13,12 @@ import xyz.shopofly.shopofly.API.UserService;
 
 public class Injector {
 
-    public static Retrofit provideRetrofit(String baseUrl){
+    private static Retrofit provideRetrofit(){
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(1, TimeUnit.SECONDS)
-                .readTimeout(1, TimeUnit.SECONDS)
-                .writeTimeout(1, TimeUnit.SECONDS)
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
                 .build();
 
         Gson gson = new GsonBuilder()
@@ -26,7 +26,7 @@ public class Injector {
                 .create();
 
         return new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(Constants.BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
@@ -34,11 +34,11 @@ public class Injector {
     }
 
     public static OrderService provideOrderService(){
-        return provideRetrofit(Constants.BASE_URL).create(OrderService.class);
+        return provideRetrofit().create(OrderService.class);
     }
 
     public static UserService provideUserService(){
-        return provideRetrofit(Constants.BASE_URL).create(UserService.class);
+        return provideRetrofit().create(UserService.class);
     }
 
 

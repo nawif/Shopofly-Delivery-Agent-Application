@@ -87,6 +87,7 @@ public class OrdersList extends AppCompatActivity {
                 if (orders != null) {
                     orderAdapter.clear();
                     orderAdapter.addAll(orders);
+                    Log.d(TAG, "onResponse: "+orders.get(0).getHalalahCode());
                 }
                 pullToRefresh.setRefreshing(false);
                 Helpers.showLoadingProgress(false, loadingAnimation);

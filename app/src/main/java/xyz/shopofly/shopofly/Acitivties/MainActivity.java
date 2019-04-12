@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements LoginContract {
     @BindView(R.id.animation_view)
     LottieAnimationView networkErrorAnim;
 
+    @BindView(R.id.credentials_error)
+    LottieAnimationView credntialsErrorAnim;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,26 +85,27 @@ public class MainActivity extends AppCompatActivity implements LoginContract {
                         break;
                     case 401:
                         Toast.makeText(MainActivity.this, "Wrong Phone number or Password", Toast.LENGTH_SHORT).show();
+                        showErrorAnimation(credntialsErrorAnim);
                         break;
                 }
                 Helpers.showLoadingProgress(false, loginProgress);
-                loginBtn.setVisibility(View.VISIBLE);
+//                loginBtn.setVisibility(View.VISIBLE);
 
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                showNetworkError();
+                showErrorAnimation(networkErrorAnim);
             }
         });
     }
 
-    public void showNetworkError() {
+    public void showErrorAnimation(LottieAnimationView errorAnim) {
         Helpers.showLoadingProgress(false, loginProgress);
-        loginBtn.setVisibility(View.VISIBLE);
-        networkErrorAnim.setVisibility(View.VISIBLE);
-        networkErrorAnim.playAnimation();
-        networkErrorAnim.addAnimatorListener(new Animator.AnimatorListener() {
+        loginBtn.setVisibility(View.INVISIBLE);
+        errorAnim.setVisibility(View.VISIBLE);
+        errorAnim.playAnimation();
+        errorAnim.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
 
@@ -109,7 +113,8 @@ public class MainActivity extends AppCompatActivity implements LoginContract {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                networkErrorAnim.setVisibility(View.INVISIBLE);
+                errorAnim.setVisibility(View.INVISIBLE);
+                loginBtn.setVisibility(View.VISIBLE);
             }
 
             @Override

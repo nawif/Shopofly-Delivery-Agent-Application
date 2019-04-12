@@ -27,6 +27,9 @@ public class Order implements Serializable
     @SerializedName("transaction")
     @Expose
     private Transaction transaction;
+    @SerializedName("halalah_code")
+    @Expose
+    private String halalahCode;
     private final static long serialVersionUID = -3264761101413436169L;
 
     /**
@@ -37,14 +40,15 @@ public class Order implements Serializable
     }
 
     /**
-     *  @param items
+     * @param items
      * @param total
      * @param address
      * @param customer
      * @param orderId
      * @param transaction
+     * @param halalahCode
      */
-    public Order(List<Item> items, Total total, Address address, Customer customer, Integer orderId, Transaction transaction) {
+    public Order(List<Item> items, Total total, Address address, Customer customer, Integer orderId, Transaction transaction, String halalahCode) {
         super();
         this.items = items;
         this.total = total;
@@ -52,6 +56,7 @@ public class Order implements Serializable
         this.customer = customer;
         this.orderId = orderId;
         this.transaction = transaction;
+        this.halalahCode = halalahCode;
     }
 
     public List<Item> getItems() {
@@ -100,5 +105,13 @@ public class Order implements Serializable
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
+    }
+
+    public String getHalalahCode() {
+        return halalahCode;
+    }
+
+    public void setHalalahCode(String halalahCode) {
+        this.halalahCode = halalahCode;
     }
 }
