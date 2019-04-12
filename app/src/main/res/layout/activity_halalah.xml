@@ -29,13 +29,25 @@
                 android:background="#fff"
                 android:orientation="vertical"
                 android:padding="@dimen/activity_vertical_margin">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/title"
+                <LinearLayout
                     android:gravity="center"
-                    android:layout_gravity="center"
-                    android:text="Hallah"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:transitionName="@string/halalah_logo"
+                        android:layout_marginEnd="8dp"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/halalah_logo"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/title"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="Hallah"/>
+
+                </LinearLayout>
                 <ImageView
                     android:id="@+id/qr_code_image"
                     android:layout_width="250dp"

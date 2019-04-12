@@ -91,6 +91,7 @@
             <ImageView
                 android:id="@+id/animation_view2"
                 android:src="@drawable/halalah_logo"
+                android:transitionName="@string/halalah_logo"
                 android:layout_width="150dp"
                 android:layout_height="150dp"/>
 

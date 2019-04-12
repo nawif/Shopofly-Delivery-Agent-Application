@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -27,6 +28,9 @@ public class PayActivity extends AppCompatActivity {
     private static final String TAG = PayActivity.class.getName();
     @BindView(R.id.payofly_container)
     CardView payoflyAnimation;
+
+    @BindView(R.id.animation_view2)
+    ImageView halalahIcon;
 
     @BindView(R.id.payofly_title)
     TextView payoflyTitle;
@@ -86,11 +90,9 @@ public class PayActivity extends AppCompatActivity {
         Log.d(TAG, "gotoHalalah: ");
         Intent intent = new Intent(this, HalalahActivity.class);
         intent.putExtra("order", order);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && false ) { //TODO:
-            Pair logo = Pair.create(payoflyAnimation, getString(R.string.payofly));
-            Pair title = Pair.create(payoflyTitle, getString(R.string.payofly_title_transition));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) { //TODO:
             ActivityOptionsCompat options = ActivityOptionsCompat.
-                    makeSceneTransitionAnimation(this,logo,title);
+                    makeSceneTransitionAnimation(this,halalahIcon, getString(R.string.halalah_logo));
             startActivity(intent, options.toBundle());
         }
         else {
