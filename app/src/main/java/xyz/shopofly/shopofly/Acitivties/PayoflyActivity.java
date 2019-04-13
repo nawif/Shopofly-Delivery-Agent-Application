@@ -11,6 +11,7 @@ import xyz.shopofly.shopofly.Model.Network.Order;
 import xyz.shopofly.shopofly.Model.Network.Payment;
 import xyz.shopofly.shopofly.R;
 
+import android.animation.Animator;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.nfc.FormatException;
@@ -25,6 +26,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.airbnb.lottie.LottieAnimationView;
 
 import java.io.IOException;
 import java.util.List;
@@ -49,6 +52,8 @@ public class PayoflyActivity extends AppCompatActivity {
 
     @BindView(R.id.payment_progress)
     ProgressBar paymentProgress;
+    @BindView(R.id.message_animation_view)
+    LottieAnimationView lottieAnimationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +62,6 @@ public class PayoflyActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         order= (Order) getIntent().getSerializableExtra("order");
         initNFCReader();
-
-//        layoutContainer.setOnClickListener(view -> handelClick());
 
 
     }
@@ -156,8 +159,10 @@ public class PayoflyActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Payment> call, Response<Payment> response) {
                     if( response.code() == 200){
+                        showPaymentAnim(true);
                         Toast.makeText(PayoflyActivity.this, "Payment accepted, thank you for using Payofly", Toast.LENGTH_LONG).show();
                     }else{
+                        showPaymentAnim(false);
                         Toast.makeText(PayoflyActivity.this, "Order has been already payed for!", Toast.LENGTH_LONG).show();
                     }
                     paymentProgress.setVisibility(View.GONE);
@@ -179,14 +184,41 @@ public class PayoflyActivity extends AppCompatActivity {
 
     }
 
-    public void handelClick() {
-        Payment payment = new Payment("kkkkkkkkkk",order.getOrderId());
-        fetch(payment);
-    }
-
     @OnClick(R.id.backImage)
     public void back(){
         finish();
+    }
+    private void handelLottieAnimationView() {
+        lottieAnimationView.setVisibility(View.VISIBLE);
+        lottieAnimationView.playAnimation();
+        lottieAnimationView.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                lottieAnimationView.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+    }
+    private void showPaymentAnim(boolean status) {
+        if(status)
+            lottieAnimationView.setAnimation("check.json");
+        else
+            lottieAnimationView.setAnimation("error.json");
+        handelLottieAnimationView();
     }
 }
 

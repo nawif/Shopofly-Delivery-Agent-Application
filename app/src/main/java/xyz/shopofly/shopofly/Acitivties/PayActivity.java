@@ -28,12 +28,13 @@ public class PayActivity extends AppCompatActivity {
     private static final String TAG = PayActivity.class.getName();
     @BindView(R.id.payofly_container)
     CardView payoflyAnimation;
+    @BindView(R.id.payofly_title)
+    TextView payoflyTitle;
 
     @BindView(R.id.animation_view2)
     ImageView halalahIcon;
-
-    @BindView(R.id.payofly_title)
-    TextView payoflyTitle;
+    @BindView(R.id.halalah_title)
+    TextView halalahTitle;
 
     @BindView(R.id.total)
     View vTotal;
@@ -65,7 +66,7 @@ public class PayActivity extends AppCompatActivity {
         TextView paymentPrice = vTotal.findViewById(R.id.subtitle);
 
         paymentType.setText(type);
-        paymentPrice.setText(total+"");
+        paymentPrice.setText(Double.toString(total));
 
     }
 
@@ -75,10 +76,10 @@ public class PayActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PayoflyActivity.class);
         intent.putExtra("order", order);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Pair logo = Pair.create(payoflyAnimation, getString(R.string.payofly));
+//            Pair logo = Pair.create(payoflyAnimation, getString(R.string.payofly));
             Pair title = Pair.create(payoflyTitle, getString(R.string.payofly_title_transition));
             ActivityOptionsCompat options = ActivityOptionsCompat.
-                    makeSceneTransitionAnimation(this,logo,title);
+                    makeSceneTransitionAnimation(this,title);
             startActivity(intent, options.toBundle());
         }
         else {
@@ -91,8 +92,10 @@ public class PayActivity extends AppCompatActivity {
         Intent intent = new Intent(this, HalalahActivity.class);
         intent.putExtra("order", order);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) { //TODO:
+            Pair logo = Pair.create(halalahIcon, getString(R.string.halalah_logo));
+            Pair title = Pair.create(halalahTitle, getString(R.string.halalah_title));
             ActivityOptionsCompat options = ActivityOptionsCompat.
-                    makeSceneTransitionAnimation(this,halalahIcon, getString(R.string.halalah_logo));
+                    makeSceneTransitionAnimation(this,logo, title);
             startActivity(intent, options.toBundle());
         }
         else {

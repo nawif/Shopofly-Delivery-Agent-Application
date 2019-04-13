@@ -22,4 +22,8 @@ public interface OrderService {
 
     @POST("store/processPayment")
     Call<Payment> processPayment(@Header("Authorization") String authorization, @Body Payment payment);
+
+    @GET("agent/billstatus/{id}")
+    Call<Void> paymentStatus(@Header("Authorization") String authorization, @Path("id") int id);
+
 }

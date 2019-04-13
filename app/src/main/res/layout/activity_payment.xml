@@ -83,11 +83,13 @@
             android:padding="@dimen/activity_vertical_margin">
 
             <TextView
+                android:id="@+id/halalah_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/subtitle"
+                android:transitionName="@string/halalah_title"
                 android:gravity="center"
-                android:text="HalalaH"/>
+                android:text="@string/halalah"/>
             <ImageView
                 android:id="@+id/animation_view2"
                 android:src="@drawable/halalah_logo"

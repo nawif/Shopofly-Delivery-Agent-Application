@@ -39,14 +39,27 @@
                     android:gravity="center"
                     android:layout_gravity="center"
                     android:text="@string/payofly"/>
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/animation_view"
+                <FrameLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:lottie_fileName="nfc_scan.json"
-                    app:lottie_loop="true"
-                    app:lottie_autoPlay="true" />
+                    android:layout_height="match_parent">
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/animation_view"
+                        android:layout_width="300dp"
+                        android:layout_gravity="center"
+                        android:layout_height="300dp"
+                        app:lottie_fileName="nfc_scan.json"
+                        app:lottie_loop="true"
+                        app:lottie_autoPlay="true" />
+                    <com.airbnb.lottie.LottieAnimationView
 
+                        android:id="@+id/message_animation_view"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center"
+                        android:scaleType="fitCenter"
+                        app:lottie_autoPlay="true"
+                        android:visibility="gone"/>
+                </FrameLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
