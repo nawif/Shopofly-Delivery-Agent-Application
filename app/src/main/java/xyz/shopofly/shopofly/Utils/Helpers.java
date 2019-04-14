@@ -59,6 +59,12 @@ public class Helpers {
         editor.apply();
     }
 
+    public static void deleteToken(Context context) {
+        SharedPreferences.Editor editor = getPrefs(context).edit();
+        editor.remove(Constants.PREFS_TOKEN_NAME);
+        editor.apply();
+    }
+
     public static Bitmap generateQRCode(String text, int width, int height) throws WriterException, NullPointerException {
         BitMatrix bitMatrix;
         try {
