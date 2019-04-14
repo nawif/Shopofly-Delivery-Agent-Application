@@ -9,16 +9,17 @@
     android:focusableInTouchMode="true"
     android:gravity="center_horizontal"
     android:orientation="vertical">
-    <include
-        layout="@layout/element_back_bar"/>
+
     <LinearLayout
-        android:padding="64dp"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
+        <include
+            layout="@layout/element_back_bar"/>
         <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
             android:layout_margin="8dp"
             android:layout_height="wrap_content"
             android:id="@+id/payofly_container"
@@ -44,14 +45,14 @@
                     android:layout_height="match_parent">
                     <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/animation_view"
-                        android:layout_width="300dp"
+                        android:layout_width="350dp"
                         android:layout_gravity="center"
-                        android:layout_height="300dp"
+                        android:layout_height="350dp"
                         app:lottie_fileName="nfc_scan.json"
                         app:lottie_loop="true"
                         app:lottie_autoPlay="true" />
                     <com.airbnb.lottie.LottieAnimationView
-
+                        android:animateLayoutChanges="true"
                         android:id="@+id/message_animation_view"
                         android:layout_width="150dp"
                         android:layout_height="150dp"

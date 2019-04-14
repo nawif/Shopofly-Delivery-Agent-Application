@@ -24,6 +24,7 @@ import android.os.Parcelable;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -190,6 +191,10 @@ public class PayoflyActivity extends AppCompatActivity {
     }
     private void handelLottieAnimationView() {
         lottieAnimationView.setVisibility(View.VISIBLE);
+        AlphaAnimation animation1 = new AlphaAnimation(0.2f, 1.0f);
+        animation1.setDuration(500);
+        lottieAnimationView.setAlpha(1f);
+        lottieAnimationView.startAnimation(animation1);
         lottieAnimationView.playAnimation();
         lottieAnimationView.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
@@ -199,7 +204,9 @@ public class PayoflyActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                lottieAnimationView.setVisibility(View.INVISIBLE);
+//                lottieAnimationView.setVisibility(View.INVISIBLE);
+                lottieAnimationView.animate().alpha(0f);
+
             }
 
             @Override

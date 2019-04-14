@@ -67,13 +67,14 @@
                         android:src="@drawable/ic_launcher_background" />
 
                     <com.airbnb.lottie.LottieAnimationView
+                        android:animateLayoutChanges="true"
                         android:id="@+id/qr_code_anim"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_gravity="center"
-                        android:background="#E6ffffff"
                         android:scaleType="fitCenter"
                         app:lottie_autoPlay="true"
+                        android:visibility="gone"
                         app:lottie_fileName="scan_qr_code_v2.json" />
                 </FrameLayout>
                 <Button

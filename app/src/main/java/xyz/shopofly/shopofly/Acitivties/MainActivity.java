@@ -145,4 +145,8 @@ public class MainActivity extends AppCompatActivity implements LoginContract {
         super.onResume();
         checkIfAlreadyLoggedIn();
     }
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+    }
 }
