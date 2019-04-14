@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -16,11 +17,14 @@ import xyz.shopofly.shopofly.Utils.Helpers;
 import xyz.shopofly.shopofly.Utils.Injector;
 import xyz.shopofly.shopofly.Utils.TokenNotFoundException;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -42,6 +46,9 @@ public class OrdersList extends AppCompatActivity {
     @BindView(R.id.loading_progress)
     LottieAnimationView loadingAnimation;
 
+    @BindView(R.id.backImage)
+    ImageView logoutIcon;
+
 
     List<Order> orders = new ArrayList<>();
 
@@ -57,6 +64,7 @@ public class OrdersList extends AppCompatActivity {
 
     private void init() {
         ButterKnife.bind(this);
+        logoutIcon.setImageResource(R.drawable.ic_002_logout);
         fetchData();
         orderAdapter = new OrderAdapter(this, orders);
         ordersList.setAdapter(orderAdapter);
@@ -122,6 +130,31 @@ public class OrdersList extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 //        super.onBackPressed();
+    }
+    @OnClick(R.id.backImage)
+    public void logout(){
+        showLogoutDialog();
+    }
+
+    private void showLogoutDialog(){
+        new AlertDialog.Builder(this)
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to logout")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Helpers.deleteToken(OrdersList.this);
+                        Intent i = new Intent(OrdersList.this, MainActivity.class);
+                        startActivity(i);
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(R.drawable.ic_warning)
+                .show();
     }
 
 }
